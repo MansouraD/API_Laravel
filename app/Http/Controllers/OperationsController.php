@@ -14,7 +14,9 @@ class OperationsController extends Controller
      */
     public function index()
     {
-        //
+        $operations = Operations::all();
+
+        return $operations->toJson(JSON_PRETTY_PRINT);
     }
 
     /**
@@ -25,7 +27,12 @@ class OperationsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(Operations::create($request->all()))
+        {
+                return response()->json([
+                    'Oourah' => 'Données ajoutées avec succes'
+                ]);
+        }
     }
 
     /**
@@ -48,7 +55,12 @@ class OperationsController extends Controller
      */
     public function update(Request $request, Operations $operations)
     {
-        //
+        if($operations->update($request->all()))
+        {
+         return response()->json([
+             'Oourah' => 'Données modifiées avec succes'
+         ]);
+        }
     }
 
     /**
@@ -59,6 +71,6 @@ class OperationsController extends Controller
      */
     public function destroy(Operations $operations)
     {
-        //
+        $operations->delete();
     }
 }

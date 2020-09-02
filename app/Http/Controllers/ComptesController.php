@@ -14,7 +14,9 @@ class ComptesController extends Controller
      */
     public function index()
     {
-        //
+        $comptes = Comptes::all();
+
+        return $comptes->toJson(JSON_PRETTY_PRINT);
     }
 
     /**
@@ -25,7 +27,12 @@ class ComptesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(Comptes::create($request->all()))
+        {
+            return response()->json([
+                'Oourah' => 'Données ajoutées avec succes'
+            ]);
+        }
     }
 
     /**
@@ -48,7 +55,12 @@ class ComptesController extends Controller
      */
     public function update(Request $request, Comptes $comptes)
     {
-        //
+        if($comptes->update($request->all()))
+        {
+         return response()->json([
+             'Oourah' => 'Données modifiées avec succes'
+         ]);
+        }
     }
 
     /**
@@ -59,6 +71,6 @@ class ComptesController extends Controller
      */
     public function destroy(Comptes $comptes)
     {
-        //
+        $comptes->delete();
     }
 }

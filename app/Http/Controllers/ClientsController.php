@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Clients;
+use App\Comptes;
+use App\Operations;
 use Illuminate\Http\Request;
 
 class ClientsController extends Controller
@@ -14,7 +16,9 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        //
+        $clients = Clients::all();
+
+        return $clients->toJson(JSON_PRETTY_PRINT); 
     }
 
     /**
@@ -25,7 +29,12 @@ class ClientsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       if(Clients::create($request->all()))
+       {
+           return response()->json([
+               'Oourah' => 'Données ajoutées avec succes'
+           ]);
+       }
     }
 
     /**
@@ -34,9 +43,11 @@ class ClientsController extends Controller
      * @param  \App\Clients  $clients
      * @return \Illuminate\Http\Response
      */
-    public function show(Clients $clients)
+    public function show(Clients $clients, Comptes $comptes, Operations $operations)
     {
-        //
+      return $clients;
+      return $comptes;
+      return $operations;
     }
 
     /**
@@ -48,7 +59,12 @@ class ClientsController extends Controller
      */
     public function update(Request $request, Clients $clients)
     {
-        //
+       if($clients->update($request->all()))
+       {
+        return response()->json([
+            'Oourah' => 'Données modifiées avec succes'
+        ]);
+       }
     }
 
     /**
@@ -59,6 +75,6 @@ class ClientsController extends Controller
      */
     public function destroy(Clients $clients)
     {
-        //
+        $clients->delete();
     }
 }
